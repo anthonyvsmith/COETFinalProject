@@ -1,0 +1,3 @@
+D:\Projects\COET295CST230CST234FinalAssignment\COET295CST230CST234FinalAssignment\obj\Debug\COET295CST230CST234FinalAssignment.njsprojAssemblyReference.cache
+D:\Projects\COET295CST230CST234FinalAssignment\COET295CST230CST234FinalAssignment\obj\Debug\COET295CST230CST234FinalAssignment.njsproj.CoreCompileInputs.cache
+D:\Projects\COET295CST230CST234FinalAssignment\COET295CST230CST234FinalAssignment\bin\Microsoft.NodejsTools.WebRole.dll

@@ -1,0 +1,16 @@
+{
+  "name": "coet295-cst230-cst234-final-assignment",
+  "version": "0.0.0",
+  "description": "COET295CST230CST234FinalAssignment",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.5.8",
+    "path": "^0.12.7"
+  }
+}
