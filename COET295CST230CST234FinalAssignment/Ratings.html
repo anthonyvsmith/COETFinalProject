@@ -6,6 +6,35 @@
     <title>Movie Ratings</title>
 </head>
 <body>
-    <
+    <script>
+        $(document).ready(() =>
+        {
+            $.ajax(
+                {
+                    url: "http://localhost:3000/movieratings/movies", type: "get", dataType: "json", success: (resp) =>
+                    {
+                        $("#placeholder").empty();
+                        let sHTML = "";
+                        for (let i = 0; i < resp.length; i++)
+                        {
+                            let sCourse = resp[i].Placeholder;
+                            sHTML += "<option value = '" + sCourse + "'>" + sCourse + "</option>";
+                        }
+                        $("#placeholder").append(sHTML);
+                    }
+                })
+        })
+    </script>
+    <form>
+        <table>
+            <tr>
+                <td>Movie Name</td>
+                <td><select id="placeholder" name="placeholder"></select></td>
+            </tr>
+            <tr>
+                <td><input type="submit" /></td>
+            </tr>
+        </table>
+    </form>
 </body>
 </html>

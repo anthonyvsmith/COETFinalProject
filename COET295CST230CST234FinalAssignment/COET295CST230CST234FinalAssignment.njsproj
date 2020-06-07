@@ -32,10 +32,10 @@
     <Content Include="CreateActors.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="CreateActors.js">
+    <Content Include="scripts\CreateActors.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="CRUD.js">
+    <Content Include="scripts\CRUD.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Details.html">
@@ -44,7 +44,6 @@
     <Content Include="Home.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="NewFile1.txt" />
     <Content Include="package.json" />
     <Content Include="Ratings.html">
       <SubType>Code</SubType>
@@ -53,6 +52,10 @@
     <Content Include="Relations.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="scripts\Details.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="scripts\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
 </Project>
