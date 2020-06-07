@@ -18,6 +18,7 @@ const selectMovies = CRUD.selectMovies;
 const createMovie = CRUD.createMovie;
 const updateMovie = CRUD.updateMovie;
 
+
 estCon("clusterCST234");
 app.use(express.static('scripts'));
 
@@ -33,6 +34,14 @@ app.get("/Actors", (req, res) =>
     res.sendFile(path.join(__dirname + "/CreateActors.html"));
 });
 
+app.get("/Actors/all", (req, res) =>
+{
+    selectActors({}).then(result =>
+    {
+        res.send(result);
+    })
+});
+
 //POST route for inserting an actor into the database
 app.post("/Actors/createActor", (req, res) =>
 {
@@ -41,7 +50,6 @@ app.post("/Actors/createActor", (req, res) =>
     let lname = req.body.last;
     let gender = req.body.gender;
 
-    console.log(req.body);
     addActor({ FirstName: fname, LastName: lname, Gender: gender }).then(result => {
         res.send(result);
     });
@@ -50,10 +58,8 @@ app.post("/Actors/createActor", (req, res) =>
 //GET route for getting actors from the database
 app.get("/Actors/:gender", (req, res) =>
 {
-    //console.log(req);
     let g = req.params;
-    
-    let gender = g.gender == "m" ? "male" : "female";
+    let gender = g.gender == "m" ? "Male" : "Female";
 
 
     selectActors({Gender: gender}).then(result =>
@@ -71,7 +77,10 @@ app.get("/MovieDetails", (req, res) =>
 
 app.get("/MovieDetails/movies", (req, res) =>
 {
-    
+    selectMovies({}).then(result =>
+    {
+        res.send(result);
+    })
 });
 
 app.post("/MovieDetails", (req, res) =>
@@ -91,7 +100,7 @@ app.post("/MovieDetails", (req, res) =>
         }
         else
         {
-            createMovie({ MovieName: movieName, LeadActor: leadActor, LeadActress: leadActress }).then(result =>
+            createMovie({ MovieName: movieName, LeadActor: leadActor, LeadActress: leadActress, Rating: 0.00, RatingCount: 0 }).then(result =>
             {
                 res.send(result);
             });
@@ -119,6 +128,58 @@ app.get("/MovieRatings/Movies", (req, res) =>
 app.get("/ActorRelations", (req, res) =>
 {
     res.sendFile(path.join(__dirname + "/Relations.html"));
+});
+
+app.post("/ActorRelations", (req, res) =>
+{
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    selectActors({ FirstName: firstName, LastName: lastName }).then(function (actor)
+    {
+        let name = actor[0].FirstName + " " + actor[0].LastName;
+        if (actor[0].Gender == "Male")
+        {
+            selectMovies({ LeadActor: name }).then(function (movies)
+            {
+                let actresses = [];
+                let actress = {};
+                movies.forEach(function (movie)
+                {
+                    if (!actresses.includes(movie.LeadActress))
+                    {
+                        actress =
+                        {
+                            "Name": movie.LeadActress,
+                            "Gender": "Female"
+                        };
+                        actresses.push(actress);
+                    }
+                });
+                res.send(actresses);
+            });
+        }
+        else
+        {
+            selectMovies({ LeadActress: name }).then(function (movies)
+            {
+                let actors = [];
+                let actor = {};
+                movies.forEach(function (movie)
+                {
+                    if (!actors.includes(movie.LeadActor))
+                    {
+                        actor =
+                        {
+                            "Name": movie.LeadActor,
+                            "Gender": "Male"
+                        };
+                        actors.push(actor);
+                    }
+                });
+                res.send(actors);
+            });
+        }
+    });
 });
 
 app.listen(PORT, () => console.log("Listening on Port " + PORT));

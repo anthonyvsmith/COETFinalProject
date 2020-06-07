@@ -46,8 +46,8 @@ module.exports =
                 const collection = client.db(sCluster).collection(sCollection);
                 collection.insertOne(insMovieQuery).then(documents =>
                 {
-                    console.log(documents.ops[0].MovieName);
-                    resolve("Successfully created movie: " + documents.ops[0].MovieName);
+
+                    resolve("Successfully created " + documents.ops[0].MovieName);
                     client.close();
                 }).catch(err => console.log(err));
             })
@@ -104,6 +104,7 @@ module.exports =
     updateMovie: (sSelection, sUpdate) =>
     {
         let sCollection = "Movies";
+        console.log(sUpdate);
         return new Promise((resolve) =>
         {
 
@@ -118,7 +119,7 @@ module.exports =
 
                 collection.updateOne(sSelection, updateStatement).then(result =>
                 {
-                    resolve(result);
+                    resolve("Successfully updated " + sUpdate.MovieName);
                     client.close();
                 }).catch(err => console.log(err));
             })
