@@ -13,7 +13,6 @@ function getActors()
     {
         let sHtml = "";
         let count = 0;
-        console.log(response);
         response.forEach(function (actor)
         {
             count++;
@@ -30,8 +29,8 @@ function getActors()
 function postActor()
 {
     //Grab values from the text fields for first name, last name, and gender radio boxes
-    let fname = $('#inputActorFName').val();
-    let lname = $('#inputActorLName').val();
+    let fname = $('#inputActorFName').val().trim();
+    let lname = $('#inputActorLName').val().trim();
     let gender = $("input:radio[name ='genderRadio']:checked").val();
 
     if (fname.length <= 0 || lname.length <= 0 || gender == null || gender.length <= 0 || fname == "--Select an Actor--" || lname == "--Select an Actress--")

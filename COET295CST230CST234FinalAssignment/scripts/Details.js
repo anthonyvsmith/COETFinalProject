@@ -32,9 +32,9 @@ function getMovies()
 
 function submitMovie()
 {
-    let actor = $('#actorList').val();
-    let actress = $('#actressList').val();
-    let movieName = $('#movieName').val();
+    let actor = $('#actorList').val().trim();
+    let actress = $('#actressList').val().trim();
+    let movieName = $('#movieName').val().trim();
 
     if (movieName.length <= 0 || actor.length <= 0 || actress.length <= 0 || $('#actorList').val() == "--Select an Actor--" || $('#actressList').val() == "--Select an Actress--")
     {

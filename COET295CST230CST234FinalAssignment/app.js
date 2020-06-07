@@ -38,6 +38,10 @@ app.get("/Actors/all", (req, res) =>
 {
     selectActors({}).then(result =>
     {
+        result.sort(function (a, b)
+        {
+            return a.FirstName.localeCompare(b.FirstName);
+        });
         res.send(result);
     })
 });
@@ -62,8 +66,13 @@ app.get("/Actors/:gender", (req, res) =>
     let gender = g.gender == "m" ? "Male" : "Female";
 
 
-    selectActors({Gender: gender}).then(result =>
+    selectActors({ Gender: gender }).then(result =>
     {
+        result.sort(function (a, b)
+        {
+           return a.FirstName.localeCompare(b.FirstName);
+        });
+
         res.send(result);
     })
 });
@@ -79,6 +88,10 @@ app.get("/MovieDetails/movies", (req, res) =>
 {
     selectMovies({}).then(result =>
     {
+        result.sort(function (a, b)
+        {
+            return a.MovieName.localeCompare(b.MovieName);
+        });
         res.send(result);
     })
 });
@@ -142,18 +155,23 @@ app.post("/ActorRelations", (req, res) =>
             selectMovies({ LeadActor: name }).then(function (movies)
             {
                 let actresses = [];
-                let actress = {};
                 movies.forEach(function (movie)
                 {
-                    if (!actresses.includes(movie.LeadActress))
+                    let tempActress =
                     {
-                        actress =
-                        {
-                            "Name": movie.LeadActress,
-                            "Gender": "Female"
-                        };
-                        actresses.push(actress);
+                        "Name": movie.LeadActress,
+                        "Gender": "Female"
                     }
+
+                    if (!actresses.some((item) =>  item.Name == tempActress.Name))
+                    {
+                        actresses.push(tempActress);
+                    }
+                });
+                console.log(actresses);
+                actresses.sort(function (a, b)
+                {
+                    return a.Name.localeCompare(b.Name);
                 });
                 res.send(actresses);
             });
@@ -166,15 +184,19 @@ app.post("/ActorRelations", (req, res) =>
                 let actor = {};
                 movies.forEach(function (movie)
                 {
-                    if (!actors.includes(movie.LeadActor))
+                    let tempActor =
                     {
-                        actor =
-                        {
-                            "Name": movie.LeadActor,
-                            "Gender": "Male"
-                        };
-                        actors.push(actor);
+                        "Name": movie.LeadActor,
+                        "Gender": "Male"
                     }
+                    if (!actors.some((item) => item.Name == tempActor.Name))
+                    {
+                        actors.push(tempActor);
+                    }
+                });
+                actors.sort(function (a, b)
+                {
+                    return a.Name.localeCompare(b.Name);
                 });
                 res.send(actors);
             });
