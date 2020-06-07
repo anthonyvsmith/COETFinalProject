@@ -26,7 +26,7 @@ module.exports =
                 const collection = client.db(sCluster).collection(sCollection);
                 collection.insertOne(insActorQuery).then(documents =>
                 {
-                    resolve("Insert was successful " + documents.insertedId);
+                    resolve("Successfully added actor: " + documents.ops[0].FirstName + " " + documents.ops[0].LastName);
                     client.close();
                 }).catch(err => console.log(err));
             })
@@ -34,7 +34,24 @@ module.exports =
     },
     createMovie: insMovieQuery =>
     {
+        let sCollection = "Movies";
+        return new Promise((resolve) =>
+        {
 
+            const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+            client.connect(err =>
+            {
+                if (err) throw err;
+
+                const collection = client.db(sCluster).collection(sCollection);
+                collection.insertOne(insMovieQuery).then(documents =>
+                {
+                    console.log(documents.ops[0].MovieName);
+                    resolve("Successfully created movie: " + documents.ops[0].MovieName);
+                    client.close();
+                }).catch(err => console.log(err));
+            })
+        })
     },
     createRating: insRatingQuery =>
     {
@@ -66,7 +83,47 @@ module.exports =
     },
     selectMovies: selMovieQuery =>
     {
+        return new Promise((resolve) =>
+        {
+            let sCollection = "Movies";
 
+            const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+            client.connect(err =>
+            {
+                if (err) throw err;
+
+                const collection = client.db(sCluster).collection(sCollection);
+                collection.find(selMovieQuery).toArray().then(documents =>
+                {
+                    resolve(documents);
+                    client.close();
+                }).catch(err => console.log(err));
+            })
+        })
+    },
+    updateMovie: (sSelection, sUpdate) =>
+    {
+        let sCollection = "Movies";
+        return new Promise((resolve) =>
+        {
+
+            const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+            client.connect(err =>
+            {
+                if (err) throw err;
+
+                const collection = client.db(sCluster).collection(sCollection);
+
+                let updateStatement = { $set: sUpdate };
+
+                collection.updateOne(sSelection, updateStatement).then(result =>
+                {
+                    resolve(result);
+                    client.close();
+                }).catch(err => console.log(err));
+            })
+
+        })
     },
     selectRating: selRatingQuery =>
     {

@@ -53,6 +53,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="scripts\Details.js" />
+    <Content Include="scripts\Helpers.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="scripts\Home.js">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="scripts\" />
