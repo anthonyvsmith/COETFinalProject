@@ -1,17 +1,26 @@
 "use strict";
+/*
+ * Anthony Smith    CST230
+ * Kyle Wei         CST234
+ * CRUD.js
+ * Provides CRUD functions for collections in DB
+ */
 
 const MongoClient = require("mongodb").MongoClient;
 
+//URI to MongoDB cluster
 const uri = "mongodb+srv://kyw113:iewelyk212@clustercst234-hkwiq.azure.mongodb.net/<dbname>?retryWrites=true&w=majority";
 
 var sCluster = "";
 
 module.exports =
 {
+    //Establishing connection to a given cluster
     estCon: (cluster) =>
     {
         sCluster = cluster;
     },
+    //Query for inserting an Actor into Actors collection
     createActor: insActorQuery =>
     {
         let sCollection = "Actors";
@@ -32,6 +41,7 @@ module.exports =
             })
         })
     },
+    //Query for inserting movie into Movies collection
     createMovie: insMovieQuery =>
     {
         let sCollection = "Movies";
@@ -53,14 +63,7 @@ module.exports =
             })
         })
     },
-    createRating: insRatingQuery =>
-    {
-        
-    },
-    createRelation: insRelationQuery =>
-    {
-
-    },
+    //Query for selecting given actors from Actors collection
     selectActors: selActorQuery =>
     {
         return new Promise((resolve) =>
@@ -81,6 +84,7 @@ module.exports =
             })
         })
     },
+    //Query for selecting given movies from Movies collection
     selectMovies: selMovieQuery =>
     {
         return new Promise((resolve) =>
@@ -101,6 +105,7 @@ module.exports =
             })
         })
     },
+    //Query for updating given movies in Movies collection
     updateMovie: (sSelection, sUpdate) =>
     {
         let sCollection = "Movies";
@@ -125,14 +130,5 @@ module.exports =
             })
 
         })
-    },
-    selectRating: selRatingQuery =>
-    {
-
-    },
-    selectRelations: selRelationQuery =>
-    {
-
     }
-
 }
