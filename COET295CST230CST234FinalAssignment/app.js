@@ -9,7 +9,6 @@
 //Imports for various modules and files
 var CRUD = require("./scripts/CRUD.js");
 var express = require('express');
-var fs = require('fs');
 var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
@@ -270,4 +269,5 @@ app.post("/ActorRelations", (req, res) =>
     });
 });
 
+// Begin listening for connections
 app.listen(PORT, () => console.log("Listening on Port " + PORT));

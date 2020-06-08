@@ -46,8 +46,6 @@ function getRelations()
             $('#relationTable').html(sHtml);
         });
     }
-
-
 }
 
 //Gets an array of ALL actors
