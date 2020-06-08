@@ -122,19 +122,34 @@ app.post("/MovieDetails", (req, res) =>
 
 });
 
+app.post("/MovieRatings/Movie", (req, res) =>
+{
+    var movieName = req.body.movieName;
+    let rating = req.body.rating;
+    let count = req.body.ratingCount;
+
+    updateMovie({ MovieName: movieName }, { Rating: rating, RatingCount: count }).then(result =>
+    {
+        res.send({ MovieName: movieName, Rating: rating, RatingCount: count });
+    });
+});
+
 //App/Page route to the Ratings page
 app.get("/MovieRatings", (req, res) =>
 {
     res.sendFile(path.join(__dirname + "/Ratings.html"));
 });
 
-app.get("/MovieRatings/Movies", (req, res) =>
+app.get("/MovieRatings/Movie", (req, res) =>
 {
-    selectMovies({}).then(result =>
+    let movieName = req.body.MovieName;
+    console.log(req.body);
+    console.log(req.body.MovieName);
+
+    selectMovies({ MovieName: movieName }).then(result =>
     {
         res.send(result);
     })
-
 })
 
 //App/Page route to the Relations page

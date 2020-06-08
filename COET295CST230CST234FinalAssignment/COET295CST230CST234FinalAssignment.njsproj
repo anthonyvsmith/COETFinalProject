@@ -56,6 +56,9 @@
     <Content Include="scripts\Home.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="scripts\Ratings.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="scripts\Relations.js">
       <SubType>Code</SubType>
     </Content>
