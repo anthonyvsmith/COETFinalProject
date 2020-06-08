@@ -140,11 +140,9 @@ app.get("/MovieRatings", (req, res) =>
     res.sendFile(path.join(__dirname + "/Ratings.html"));
 });
 
-app.get("/MovieRatings/Movie", (req, res) =>
+app.get("/MovieRatings/Movie/:MovieName", (req, res) =>
 {
-    let movieName = req.body.MovieName;
-    console.log(req.body);
-    console.log(req.body.MovieName);
+    let movieName = req.params.MovieName;
 
     selectMovies({ MovieName: movieName }).then(result =>
     {
@@ -183,7 +181,6 @@ app.post("/ActorRelations", (req, res) =>
                         actresses.push(tempActress);
                     }
                 });
-                console.log(actresses);
                 actresses.sort(function (a, b)
                 {
                     return a.Name.localeCompare(b.Name);

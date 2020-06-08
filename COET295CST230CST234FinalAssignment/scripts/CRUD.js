@@ -104,7 +104,7 @@ module.exports =
     updateMovie: (sSelection, sUpdate) =>
     {
         let sCollection = "Movies";
-        console.log(sUpdate);
+
         return new Promise((resolve) =>
         {
 

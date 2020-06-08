@@ -75,7 +75,7 @@ function getActors()
          {
              //Create new select option for every actor in response
              let sHtml = $('#actorList').html();
-             console.log(response);
+
              response.forEach(function (actor)
              {
                  sHtml += "<option>" + actor.FirstName + " " + actor.LastName + "</option>";
@@ -91,7 +91,7 @@ function getActors()
         {
             //Create new select option for every actress in response
             let sHtml = $('#actressList').html();
-            console.log(response);
+
             response.forEach(function (actor)
             {
                 sHtml += "<option>" + actor.FirstName + " " + actor.LastName + "</option>";

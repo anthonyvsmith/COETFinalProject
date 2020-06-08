@@ -4,6 +4,13 @@ $(document).ready(() =>
 {
     getMovies();
     $('#submitRating').click(submitRating);
+    $('#movieList').change(function ()
+    {
+        $('#movieTable').html('');
+        $('#createResult').removeClass("text-success");
+        $('#createResult').removeClass("text-danger");
+        $('#createResult').text("");
+    });
 })
 
 function getMovies()
@@ -22,33 +29,47 @@ function getMovies()
 
 function submitRating()
 {
-    let movie =
+    let movieName = $('#movieList').val();
+    let newRating = 0;
+    let newCount = 0;
+    let inputRating = $('#inputRating').val();
+
+    if (inputRating <= 0 || inputRating > 100)
     {
-        MovieName: $('#movieList').val()
+        $('#createResult').removeClass("text-success");
+        $('#createResult').addClass("text-danger");
+        $('#createResult').text("Invalid rating. Must be between 1 and 100");
     }
-    let newRating = $('#inputRating').val();
-
-    console.log(movie.MovieName + "\n" + newRating);
-
-    $.get("http://localhost:3000/MovieRatings/Movie", movie, function (response)
+    else
     {
-        console.log(response);
-        newRating += parseInt(response.Rating);
-        let newCount = response.Count + 1;
+        newRating += parseInt(inputRating);
 
-        $.post("http://localhost:3000/MovieRatings/Movie", { movieName: movie.MovieName, rating: newRating, ratingCount: newCount }, function (response)
+        $.get("http://localhost:3000/MovieRatings/Movie/" + movieName, function (response)
         {
-            var sHTML = "";
-            let average = response.Rating / response.RatingCount;
+            newRating += parseInt(response[0].Rating);
+            newCount = parseInt(response[0].RatingCount) + 1;
 
-            sHTML += "<tr>";
-            sHTML += "<td>" + response.MovieName + "</td>";
-            sHTML += "<td>" + average + "</td>";
-            sHTML += "</tr>";
+            $.post("http://localhost:3000/MovieRatings/Movie", { movieName: movieName, rating: newRating, ratingCount: newCount }, function (response)
+            {
+                var sHTML = "";
+                let average = parseInt(response.Rating) / parseInt(response.RatingCount);
 
-            $('#movieTable').html(sHTML);
+                sHTML += "<tr>";
+                sHTML += "<td>" + response.MovieName + "</td>";
+                sHTML += "<td>" + Math.round(average) + "</td>";
+                sHTML += "<td>" + response.RatingCount + "</td>";
+                sHTML += "</tr>";
+
+                $('#movieTable').html(sHTML);
+
+                $('#inputRating').val(50);
+                $('#createResult').removeClass("text-danger");
+                $('#createResult').addClass("text-success");
+                $('#createResult').text("Successfully rated " + movieName + ": " + inputRating + "%");
+            });
         });
-    });
+    }
+
 
     
 }
